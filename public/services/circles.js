@@ -14,6 +14,11 @@ angular.module('mean.circles').factory('Circles', ['$resource',
         isArray: false,
         url: '/api/circles/mine'
       },
+      challenge: {
+        method: 'GET',
+        isArray: false,
+        url: '/api/circles/challenges'
+      },
       all: {
         method: 'GET',
         isArray: false,

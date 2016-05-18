@@ -11,8 +11,10 @@ module.exports = function(Circles, app, auth, database) {
   app.use(circles.aclBlocker);
 
   app.get('/api/circles/visualize', circles.visualize);
+  app.get('/api/circles/list', circles.list);
   app.get('/api/circles/tree', circles.tree);
   app.get('/api/circles/mine', circles.mine);
+  app.get('/api/circles/challenge', circles.challenge);
   app.get('/api/circles/all', circles.hasCircle('admin'), circles.all);
 
   app.route('/api/circles/:name')
