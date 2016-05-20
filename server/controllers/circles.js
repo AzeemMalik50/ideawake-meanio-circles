@@ -80,8 +80,11 @@ module.exports = function(Circles, app) {
         return res.send({allowed: req.acl.user.allowed, descendants: descendants });
     },
     challenge:  function(req, res) {
-      var decendants = {};
-      return res.send({allowed: req.acl.user.allowed, decentants: []});
+      // var decendants = {};
+      // return res.send({allowed: req.acl.user.allowed, decentants: []});
+      Circles.find({'type':'challenge'},function(err, list){
+        return res.send(list);
+      });
     },
     all: function(req, res) {
         return res.send({
