@@ -82,7 +82,8 @@ module.exports = function(Circles, app) {
     challenge:  function(req, res) {
       // var decendants = {};
       // return res.send({allowed: req.acl.user.allowed, decentants: []});
-      Circles.find({'type':'challenge'},function(err, list){
+      console.log('i am getting a challenge server side!!!!!')
+      Circle.find({'type':'challenge'},function(err, list){
         return res.send(list);
       });
     },
