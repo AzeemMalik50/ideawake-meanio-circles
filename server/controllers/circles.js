@@ -9,9 +9,9 @@ module.exports = function(Circles, app) {
         });
     },
     list: function(req, res) {
-      Circles.render('list', {}, function(err, html) {
-        res.send(html);
-      });
+        Circle.find({},function(err, data){
+          res.send(data);
+        });
     },
     tree: function(req, res) {
         Circle.buildPermissions(function(data) {
@@ -79,11 +79,11 @@ module.exports = function(Circles, app) {
         }
         return res.send({allowed: req.acl.user.allowed, descendants: descendants });
     },
-    challenge:  function(req, res) {
+    byType:  function(req, res) {
       // var decendants = {};
       // return res.send({allowed: req.acl.user.allowed, decentants: []});
-      console.log('i am getting a challenge server side!!!!!')
-      Circle.find({'type':'challenge'},function(err, list){
+      console.log('i am getting a challenge server side by type = ', req.params.circleType)
+      Circle.find({'circleType':req.params.circleType},function(err, list){
         return res.send(list);
       });
     },

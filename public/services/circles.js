@@ -14,10 +14,10 @@ angular.module('mean.circles').factory('Circles', ['$resource',
         isArray: false,
         url: '/api/circles/mine'
       },
-      challenge: {
+      bytype: {
         method: 'GET',
-        isArray: false,
-        url: '/api/circles/challenges'
+        isArray: true,
+        url: '/api/circles/type/:type'
       },
       all: {
         method: 'GET',
