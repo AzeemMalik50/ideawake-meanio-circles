@@ -8,12 +8,14 @@ var CircleSchema = new Schema({
   updated: Date,
   category: [String],
   description: String,
+  circleType: String,
   name: {
     type: String,
     required: true,
     unique: true
   },
   circles: [String],
+
 });
 
 //add index
