@@ -82,7 +82,7 @@ module.exports = function(Circles, app) {
     byType:  function(req, res) {
       // var decendants = {};
       // return res.send({allowed: req.acl.user.allowed, decentants: []});
-      console.log('i am getting a challenge server side by type = ', req.params.circleType)
+      console.log('i am getting a challenge server side by type = ', req.params.circleType);
       Circle.find({'circleType':req.params.circleType}).sort("name").exec(function(err, list){
         return res.send(list);
       });
@@ -94,7 +94,12 @@ module.exports = function(Circles, app) {
         });
     },
     show: function(req, res) {
-        return res.send('show');
+        return Circle.findOne({'name':req.params.name},function(err,one){
+            if(err){
+                throw err;
+            }
+            res.send(one);
+        });
     },
     loadCircles: function(req, res, next) {
         var data = app.get('circles');
