@@ -30,14 +30,12 @@ angular.module('mean.circles').factory('UserList', ['$uibModal', 'Circles' , 'Aw
             }
           });
           $scope.ok = function () {
-            $scope.group.categories = [$scope.category];
+            $scope.group.category = [$scope.category];
             var circle = new Circles($scope.group);
-            console.log('circle,', circle);
             circle.$save(function(newCircle){
-
                 $scope.invites.roles.push(circle.name);
                 sendInvites($scope.invites).then(function(){
-                  console.log('success sent invites');
+                console.log('success sent invites');
                 Awareness.awareness('success', 'User List Created!', true);
 
                 $uibModalInstance.close(newCircle);
