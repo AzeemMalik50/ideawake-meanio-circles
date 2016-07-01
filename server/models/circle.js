@@ -8,6 +8,7 @@ var CircleSchema = new Schema({
   updated: Date,
   category: [String],
   description: String,
+  members: {type:Number,default:0},
   circleType: String,
   name: {
     type: String,
