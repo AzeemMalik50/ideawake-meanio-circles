@@ -30,22 +30,26 @@ angular.module('mean.circles').factory('UserList', ['$uibModal', 'Circles' , 'Aw
             }
           });
           $scope.ok = function () {
-            $scope.group.category = [$scope.category];
-            var circle = new Circles($scope.group);
-            circle.$save(function(newCircle){
-                $scope.invites.roles.push(circle.name);
-                sendInvites($scope.invites).then(function(){
-                console.log('success sent invites');
-                Awareness.awareness('success', 'User List Created!', true);
+            if(!$scope.group || !$scope.group.name || $scope.group.name.length() == 0) {
+              alert('Name is required');
+            } else {
+              $scope.group.category = [$scope.category];
+              var circle = new Circles($scope.group);
+              circle.$save(function(newCircle){
+                  $scope.invites.roles.push(circle.name);
+                  sendInvites($scope.invites).then(function(){
+                  console.log('success sent invites');
+                  Awareness.awareness('success', 'User List Created!', true);
 
-                $uibModalInstance.close(newCircle);
-                }, function(error) {
-                  console.log('unable to send invites');
-                  Awareness.awareness('danger', 'Unable to send invites', true);
-                $uibModalInstance.close(newCircle);
-                });
+                  $uibModalInstance.close(newCircle);
+                  }, function(error) {
+                    console.log('unable to send invites');
+                    Awareness.awareness('danger', 'Unable to send invites', true);
+                  $uibModalInstance.close(newCircle);
+                  });
 
-            });
+              });
+            }
           };
 
           $scope.cancel = function () {
