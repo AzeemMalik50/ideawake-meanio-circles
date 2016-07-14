@@ -30,10 +30,14 @@ angular.module('mean.circles').factory('UserList', ['$uibModal', 'Circles' , 'Aw
             }
           });
           $scope.ok = function () {
-            if(!$scope.group || !$scope.group.name || $scope.group.name.length() == 0) {
+            $scope.group.category = [$scope.category];
+            console.log('category', $scope.category, $scope.group.category);
+
+            if(!$scope.group || !$scope.group.name || $scope.group.name.length == 0) {
               alert('Name is required');
+            } else if( !$scope.group || !$scope.group.category || $scope.group.category.length == 0 ) {
+              alert('category is required');
             } else {
-              $scope.group.category = [$scope.category];
               var circle = new Circles($scope.group);
               circle.$save(function(newCircle){
                   $scope.invites.roles.push(circle.name);
