@@ -31,7 +31,7 @@ angular.module('mean.circles').factory('UserList', ['$uibModal', 'Circles' , 'Aw
           });
           $scope.ok = function () {
             $scope.group.category = [$scope.category];
-            console.log('category', $scope.category, $scope.group.category);
+            console.log('category_b', $scope.category, $scope.group.category);
 
             if(!$scope.group || !$scope.group.name || $scope.group.name.length == 0) {
               alert('Name is required');
