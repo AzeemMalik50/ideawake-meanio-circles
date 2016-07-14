@@ -35,7 +35,7 @@ angular.module('mean.circles').factory('UserList', ['$uibModal', 'Circles' , 'Aw
 
             if(!$scope.group || !$scope.group.name || $scope.group.name.length == 0) {
               alert('Name is required');
-            } else if( !$scope.group || !$scope.group.category || $scope.group.category.length == 0 ) {
+            } else if( !$scope.category ) {
               alert('category is required');
             } else {
               var circle = new Circles($scope.group);
