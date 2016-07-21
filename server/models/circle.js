@@ -47,11 +47,15 @@ CircleSchema.statics.buildPermissions = function(callback) {
       found = false;
 
       circles.forEach(function(circle) {
+        console.log('circle', circle);
 
         var containers = data[circle.name].containers;
 
         //going through each of the containers parents
         containers.forEach(function(container) {
+          console.log('container', container);
+          console.log('data[container]', data[container]);
+          console.log('data[container].decendants', data[container].decendants);
 
           if (data[container].decendants.indexOf(circle.name) == -1) {
             data[container].decendants.push(circle.name.toString());
