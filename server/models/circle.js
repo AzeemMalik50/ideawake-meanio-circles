@@ -53,11 +53,11 @@ CircleSchema.statics.buildPermissions = function(callback) {
 
         //going through each of the containers parents
         containers.forEach(function(container) {
-          console.log('container', container);
-          console.log('data[container]', data[container]);
-          console.log('data[container].decendants', data[container].decendants);
+          // console.log('container', container);
+          // console.log('data[container]', data[container]);
+          // console.log('data[container].decendants', data[container].decendants);
 
-          if (data[container].decendants.indexOf(circle.name) == -1) {
+          if (data && data[container] && data[container].decendants.indexOf(circle.name) == -1) {
             data[container].decendants.push(circle.name.toString());
             if (level === 0) {
               data[circle.name].parents.push(container.toString());
@@ -65,12 +65,14 @@ CircleSchema.statics.buildPermissions = function(callback) {
             }
           }
 
-          data[container].circles.forEach(function(circ) {
-            if (containers.indexOf(circ) == -1 && circ != circle.name) {
-              data[circle.name].containers.push(circ.toString());
-              found = true;
-            }
-          });
+          if (data && data[container] && data[container].circles) {
+            data[container].circles.forEach(function(circ) {
+              if (containers.indexOf(circ) == -1 && circ != circle.name) {
+                data[circle.name].containers.push(circ.toString());
+                found = true;
+              }
+            });
+          }
         });
       });
       level++;
