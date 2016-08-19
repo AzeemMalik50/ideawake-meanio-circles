@@ -72,6 +72,26 @@ module.exports = function(Circles, app) {
             });
         });
     },
+    userCount: function(req, res) {
+        var User = mongoose.model('User');
+        var query = {}
+        if (req.body && req.body.permissions.length > 0) {
+            var circles = []
+            for(var x in req.body.permissions) {
+              if((req.body.permissions[x] !== undefined)) {
+                circles.push(req.body.permissions[x]);
+              }
+            }
+        }
+        if (circles.length > 0) {
+            query = {'roles' : {$in : circles }};
+        } else {
+            query = {'roles' : {$in : ['authenticated'] }};
+        }
+        User.count(query, function(err, count) {
+            res.json({'count' : count});
+        });
+    },
     mine: function(req, res) {
         var descendants = {};
         for (var index in req.acl.user.circles) {
@@ -80,8 +100,6 @@ module.exports = function(Circles, app) {
         return res.send({allowed: req.acl.user.allowed, descendants: descendants });
     },
     byType:  function(req, res) {
-      // var decendants = {};
-      // return res.send({allowed: req.acl.user.allowed, decentants: []});
       console.log('i am getting a circle server side by type = ', req.params.circleType);
       Circle.find({'circleType':req.params.circleType}).sort("name").exec(function(err, list){
         return res.send(list);
