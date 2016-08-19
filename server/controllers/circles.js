@@ -75,8 +75,8 @@ module.exports = function(Circles, app) {
     userCount: function(req, res) {
         var User = mongoose.model('User');
         var query = {}
+        var circles = []
         if (req.body&&req.body.permissions&&req.body.permissions.length > 0) {
-            var circles = []
             for(var x in req.body.permissions) {
               if((req.body.permissions[x] !== undefined)) {
                 circles.push(req.body.permissions[x]);
