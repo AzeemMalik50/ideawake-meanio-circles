@@ -100,7 +100,12 @@ module.exports = function(Circles, app) {
         return res.send({allowed: req.acl.user.allowed, descendants: descendants });
     },
     byType:  function(req, res) {
-      var query = req.params.circleType ? {'circleType':req.params.circleType} : {};
+      var query;
+      if (req.params.circleType && req.params.circleType !== 'all') {
+        query = {'circleType':req.params.circleType};
+      } else {
+        query = {};
+      }
       console.log('getting circles by type', req.params.circleType);
       Circle.find(query).sort('name').exec(function(err, list){
         return res.send(list);
