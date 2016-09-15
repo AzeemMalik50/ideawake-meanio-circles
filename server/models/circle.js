@@ -9,7 +9,7 @@ var CircleSchema = new Schema({
   category: [String],
   description: String,
   members: {type:Number,default:0},
-  circleType: String,
+  circleType: {type:String,default:'default'},
   name: {
     type: String,
     required: true,
