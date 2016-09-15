@@ -100,8 +100,9 @@ module.exports = function(Circles, app) {
         return res.send({allowed: req.acl.user.allowed, descendants: descendants });
     },
     byType:  function(req, res) {
-      console.log('i am getting a circle server side by type = ', req.params.circleType);
-      Circle.find({'circleType':req.params.circleType}).sort("name").exec(function(err, list){
+      var query = req.params.circleType ? {'circleType':req.params.circleType} : {};
+      console.log('getting circles by type', req.params.circleType);
+      Circle.find(query).sort('name').exec(function(err, list){
         return res.send(list);
       });
     },
