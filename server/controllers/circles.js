@@ -106,6 +106,17 @@ module.exports = function(Circles, app) {
         return res.send(list);
       });
     },
+    byTypes:  function(req, res) {
+      var query = req.params.circleTypes ? {'circleType': { '$in' : [req.params.circleTypes]}} : {};
+      console.log('getting circles by types ', req.params.circleTypes);
+      if (Array.isArray(req.params.circleTypes) && req.params.circleTypes.length >= 0) {
+          Circle.find(query).sort('name').exec(function(err, list){
+            return res.send(list);
+          });        
+      } else {
+        return res.status(500).send('error, did not pass an array of circleTypes or the array was empty');
+      }
+    },
     all: function(req, res) {
         return res.send({
             tree:req.acl.tree,
