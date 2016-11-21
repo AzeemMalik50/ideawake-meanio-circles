@@ -64,7 +64,7 @@ function registerCircle(name, parents) {
   var set = {};
   if(parents) {
     set.$push = {
-      circles: parents
+      circles: { $each : parents }
     };
   }
 
