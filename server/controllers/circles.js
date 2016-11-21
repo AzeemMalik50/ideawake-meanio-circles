@@ -168,8 +168,8 @@ module.exports = function(Circles, app) {
 
         var tree = Circle.buildTrees(userRoles);
 
-        for (var index in tree) {
-            tree[index].children = req.acl.tree[index].children;
+        for (var index in tree.children) {
+            tree.children[index] = req.acl.tree.children[index];
         }
 
         req.acl.user = {
