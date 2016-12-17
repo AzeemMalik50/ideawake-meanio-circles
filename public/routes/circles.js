@@ -28,7 +28,12 @@ angular.module('mean.circles').config(['$stateProvider',
             if (acl.allowed) {
               checkCircle(acl, requiredCircle);
             } else {
-              $http.get('/api/circles/mine').success(aclCallBack);
+              $http.get('/api/circles/mine').then(function(response) {
+                var data = response.data;
+                aclCallBack(data);
+              }).catch(function(response) {
+                console.log('error getting user circles via /api/circles/mine', response)
+              });
             }
           }
         }
