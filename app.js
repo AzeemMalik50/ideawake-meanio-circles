@@ -62,6 +62,10 @@ function registerCircle(name, parents) {
 
   var query = { name: name };
   var set = {};
+  var queryOptions = {
+    upsert: true,
+    setDefaultsOnInsert: true
+  };
   if(parents) {
     set.$push = {
       circles: { $each : parents }
@@ -70,9 +74,7 @@ function registerCircle(name, parents) {
 
   Circle.findOne(query, function(err, data) {
     if (!err && !data) {
-      Circle.findOneAndUpdate(query, set, {
-        upsert: true
-      }, function(err) {
+      Circle.findOneAndUpdate(query, set, queryOptions, function(err) {
         if (err) {
           console.log(err);
         }

@@ -3,6 +3,16 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+var options = {
+  // toObject: {
+  //   virtuals: true
+  // },
+  // toJSON: {
+  //   virtuals: true
+  // },
+  timestamps: true
+};
+
 var CircleSchema = new Schema({
   created: Date,
   updated: Date,
@@ -17,7 +27,7 @@ var CircleSchema = new Schema({
   },
   circles: [String],
 
-});
+}, options);
 
 //add index
 CircleSchema.statics.buildPermissions = function(callback) {
