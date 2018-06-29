@@ -54,7 +54,8 @@ module.exports = function(Circles, app) {
                 $set: req.body
             }, {
                 multi: false,
-                upsert: false
+                upsert: false,
+                new: true
             }, function(err, circle) {
                 if (err) {
                     return res.send(500, err.message);
