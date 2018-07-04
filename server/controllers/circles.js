@@ -109,6 +109,22 @@ module.exports = function(Circles, app) {
         return res.send(list);
       });
     },
+    byName:  function(req, res) {
+        var query;
+        if (req.params.circles) {
+          query = {
+          'name': {
+            $in: req.params.circles   
+          }
+        };
+        } else {
+          query = {};
+        }
+        console.log('getting circles by type', req.params.circleType);
+        Circle.find(query).sort('name').exec(function(err, list){
+          return res.send(list);
+        });
+      },
     all: function(req, res) {
         return res.send({
             tree:req.acl.tree,
