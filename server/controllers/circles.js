@@ -111,16 +111,16 @@ module.exports = function(Circles, app) {
     },
     byName:  function(req, res) {
         var query;
-        if (req.params.circles) {
+        if (req.body.circles) {
           query = {
           'name': {
-            $in: req.params.circles   
+            $in: req.body.circles   
           }
         };
         } else {
           query = {};
         }
-        console.log('getting circles by type', req.params.circleType);
+        
         Circle.find(query).sort('name').exec(function(err, list){
           return res.send(list);
         });
