@@ -25,6 +25,7 @@ var CircleSchema = new Schema({
     required: true,
     unique: true
   },
+  displayLabel: String,
   circles: [String],
 
 }, options);

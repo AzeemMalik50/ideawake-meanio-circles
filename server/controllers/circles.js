@@ -40,37 +40,35 @@ module.exports = function(Circles, app) {
 
     update: function(req, res) {
 
-        if (!req.params.name) return res.send(404, 'No name specified');
+        if (!req.params.name && !req.body._id) return res.send(404, 'No name specified');                    
+        Circle.findOne({
+            _id: req.body._id
+        }).exec(function(err, circle) {
+            if(err) return res.json({err});
 
-        validateCircles(req.params.name, req.body.circles, function(err, status) {
+            if(!circle) return res.status(404).json({err: 'Circle not found'});
 
-            if (err) return res.send(400, status);
-
-            Circle.findOne({
-                name: req.params.name
-            }).exec(function(err, circle) {
-                if (!err && circle) {
-                    Circle.findOneAndUpdate({
-                        name: circle.name
-                    }, {
-                        $set: req.body
-                    }, {
-                        multi: false,
-                        upsert: false
-                    }, function(err, circle) {
-                        if (err) {
-                            return res.send(500, err.message);
-                        }
-
-                        Circle.buildPermissions(function(data) {
-                            app.set('circles', data);
-                        });
-
-                        res.send(200, 'updated');
-                    });
+            Circle.findOneAndUpdate({
+                _id: circle._id
+            }, {
+                $set: req.body
+            }, {
+                multi: false,
+                upsert: false,
+                new: true
+            }, function(err, circle) {
+                if (err) {
+                    return res.send(500, err.message);
                 }
+
+                Circle.buildPermissions(function(data) {
+                    app.set('circles', data);
+                });
+
+                res.json(circle);
             });
-        });
+            
+        });        
     },
     userCount: function(req, res) {
         var User = mongoose.model('User');
@@ -111,6 +109,22 @@ module.exports = function(Circles, app) {
         return res.send(list);
       });
     },
+    byName:  function(req, res) {
+        var query;
+        if (req.body.circles) {
+          query = {
+          'name': {
+            $in: req.body.circles   
+          }
+        };
+        } else {
+          query = {};
+        }
+        
+        Circle.find(query).sort('name').exec(function(err, list){
+          return res.send(list);
+        });
+      },
     all: function(req, res) {
         return res.send({
             tree:req.acl.tree,
@@ -209,7 +223,7 @@ module.exports = function(Circles, app) {
 
 
 
-function validateCircles(name, circles, callback) {
+function validateCircles(name, circles, callback) {    
 
     Circle.buildPermissions(function(data) {
         circles = [].concat(circles);
