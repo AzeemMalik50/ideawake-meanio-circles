@@ -19,10 +19,6 @@ angular.module('mean.circles').config(['$stateProvider',
 ])
   .run(['$rootScope', '$state', '$http', 'MeanUser', '$cookies', '$location','$window', function ($rootScope, $state, $http, MeanUser, $cookies, $location, $window) {
     $rootScope.$on('$stateChangeStart', function (e, toState) {
-      /* pervent login / signup routes if platform is ADFS/SSO enabled */
-      if((toState.name == "auth.login" && $rootScope.platformSettings && $rootScope.platformSettings.adfs) || (toState.name == "custom signup" && $rootScope.platformSettings && $rootScope.platformSettings.adfs)){
-        $window.location.href = '/api/saml/login';        
-      }
       var acl = MeanUser.acl;
       // If the route has a circle requirement on it validate it
       if (toState.requiredCircles && angular.isArray(toState.requiredCircles.circles)) {
