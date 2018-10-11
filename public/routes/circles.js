@@ -46,7 +46,7 @@ angular.module('mean.circles').config(['$stateProvider',
         if(acl.allowed.indexOf(requiredCircle) === -1) {
           e.preventDefault();
 
-          $cookies.put('redirect', $location.path());
+          $cookies.put('redirect', $location.url());
           /* check if platform is ADFS/SSO enabled */
           if($rootScope.platformSettings && $rootScope.platformSettings.adfs) {
           /* redirect to adfs login page */
