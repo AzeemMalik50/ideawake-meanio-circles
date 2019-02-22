@@ -21,10 +21,11 @@ angular.module('mean.circles').config(['$stateProvider',
     $rootScope.$on('$stateChangeStart', function (e, toState) {
       var acl = MeanUser.acl;
 
-      const loggedInUserUrls = ['/signup', '/auth/login', '/forgotpassword'];
+      const loggedInUserUrls = ['/signup', '/login', '/forgotpassword'];
       if (localStorage.getItem('JWT')) { //if token is present, it means the user is already logged in
         if (_.includes(loggedInUserUrls, toState.url)) {
-          $state.go('auth.login');
+          e.preventDefault();
+          $state.go('challenges'); //this is the page where user lands after login to the application
         }
       }
 
