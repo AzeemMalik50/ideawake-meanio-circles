@@ -20,6 +20,15 @@ angular.module('mean.circles').config(['$stateProvider',
   .run(['$rootScope', '$state', '$http', 'MeanUser', '$cookies', '$location','$window', function ($rootScope, $state, $http, MeanUser, $cookies, $location, $window) {
     $rootScope.$on('$stateChangeStart', function (e, toState) {
       var acl = MeanUser.acl;
+
+      const loggedInUserUrls = ['/signup', '/login', '/forgotpassword'];
+      if (localStorage.getItem('JWT')) { //if token is present, it means the user is already logged in
+        if (_.includes(loggedInUserUrls, toState.url)) {
+          e.preventDefault();
+          $state.go('challenges'); //this is the page where user lands after login to the application
+        }
+      }
+
       // If the route has a circle requirement on it validate it
       if (toState.requiredCircles && angular.isArray(toState.requiredCircles.circles)) {
         for (var j = 0; j < toState.requiredCircles.circles.length; j++) {
