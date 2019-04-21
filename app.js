@@ -57,7 +57,7 @@ function updateCircleMemberCount() {
   });
 }
 
-function registerCircle(name, parents) {
+function registerCircle(name, parents, displayLabel) {
   var Circle = require('mongoose').model('Circle');
 
   var query = { name: name };
@@ -66,10 +66,14 @@ function registerCircle(name, parents) {
     upsert: true,
     setDefaultsOnInsert: true
   };
-  if(parents) {
+  if (parents && parents.length) {
     set.$push = {
       circles: { $each : parents }
     };
+  }
+
+  if (displayLabel) {
+    query.displayLabel = displayLabel;
   }
 
   Circle.findOne(query, function(err, data) {
