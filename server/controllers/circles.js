@@ -24,12 +24,21 @@ module.exports = function(Circles, app) {
         var circle = new Circle(req.body);
 
         circle.save(function(err) {
-            if (err) {
-                return res.status(500).json({
-                    error: 'Cannot save the circle'
-                });
+            if (err) {                
+                switch(err.code) {
+                    case 11000:
+                        return res.status(400).json({
+                            error: 'Group Name exist already'
+                            });
+                        break;
+                    default:
+                        return res.status(500).json({
+                            error: 'Cannot save the circle'
+                        });
+                        break;
+                  }
             }
-
+            
             Circle.buildPermissions(function(data) {
                 app.set('circles', data);
             });
