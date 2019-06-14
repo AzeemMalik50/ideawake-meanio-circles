@@ -29,7 +29,7 @@ module.exports = function(Circles, app) {
                     case 11000:
                         return res.status(400).json({
                             error: 'Group Name exist already'
-                            });
+                        });
                         break;
                     default:
                         return res.status(500).json({
